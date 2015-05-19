@@ -147,7 +147,7 @@ namespace Orchard.DisplayManagement.Implementation {
             foreach (var shapeAlternate in shapeAlternates.Reverse()) {
 
                 foreach (var shapeBindingResolver in _shapeBindingResolvers) {
-                    if (shapeTable.Bindings.TryGetValue(string.Concat(displayContext.BindingAction.ToString(), "|", shapeAlternate), out shapeBinding)) {
+                    if (shapeBindingResolver.TryGetDescriptorBinding(shapeAlternate, out shapeBinding)) {
                         return true;
                     }
                 }
@@ -168,7 +168,7 @@ namespace Orchard.DisplayManagement.Implementation {
                     }
                 }
 
-                if (shapeTable.Bindings.TryGetValue(shapeTypeScan, out shapeBinding)) {
+                if (shapeTable.Bindings.TryGetValue(string.Concat(displayContext.BindingAction.ToString(), "|", shapeTypeScan), out shapeBinding)) {
                     return true;
                 }
 
