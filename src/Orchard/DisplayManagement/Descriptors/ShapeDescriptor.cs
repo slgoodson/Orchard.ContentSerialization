@@ -5,6 +5,12 @@ using System.Web;
 using Orchard.DisplayManagement.Implementation;
 
 namespace Orchard.DisplayManagement.Descriptors {
+
+    public enum BindingAction {
+        Display,
+        Translate
+    }
+
     public class ShapeDescriptor {
         public ShapeDescriptor() {
             Creating = Enumerable.Empty<Action<ShapeCreatingContext>>();
@@ -56,5 +62,6 @@ namespace Orchard.DisplayManagement.Descriptors {
         public string BindingName { get; set; }
         public string BindingSource { get; set; }
         public Func<DisplayContext, IHtmlString> Binding { get; set; }
+        public BindingAction BindingAction { get; set; }
     }
 }

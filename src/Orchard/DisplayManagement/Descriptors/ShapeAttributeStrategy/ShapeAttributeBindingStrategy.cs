@@ -38,6 +38,7 @@ namespace Orchard.DisplayManagement.Descriptors.ShapeAttributeStrategy {
                 var shapeType = occurrence.ShapeAttribute.ShapeType ?? occurrence.MethodInfo.Name;
                 builder.Describe(shapeType)
                     .From(occurrence.Feature)
+                    .Action(occurrence.ShapeAttribute.BindingAction)
                     .BoundAs(
                         occurrence.MethodInfo.DeclaringType.FullName + "::" + occurrence.MethodInfo.Name,
                         descriptor => CreateDelegate(occurrence, descriptor));

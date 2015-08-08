@@ -75,7 +75,7 @@ namespace Orchard.DisplayManagement.Implementation {
             // find base shape association using only the fundamental shape type. 
             // alternates that may already be registered do not affect the "displaying" event calls
             ShapeBinding shapeBinding;
-            if (TryGetDescriptorBinding(shapeMetadata.Type, Enumerable.Empty<string>(), shapeTable, out shapeBinding)) {
+            if (TryGetDescriptorBinding(shapeMetadata.Type, Enumerable.Empty<string>(), shapeTable, context, out shapeBinding)) {
                 shapeBinding.ShapeDescriptor.Displaying.Invoke(action => action(displayingContext), Logger);
 
                 // copy all binding sources (all templates for this shape) in order to use them as Localization scopes
@@ -95,7 +95,7 @@ namespace Orchard.DisplayManagement.Implementation {
             else {
                 // now find the actual binding to render, taking alternates into account
                 ShapeBinding actualBinding;
-                if ( TryGetDescriptorBinding(shapeMetadata.Type, shapeMetadata.Alternates, shapeTable, out actualBinding) ) {
+                if (TryGetDescriptorBinding(shapeMetadata.Type, shapeMetadata.Alternates, shapeTable, context, out actualBinding)) {
                     shape.Metadata.ChildContent = Process(actualBinding, shape, context);
                 }
                 else {
@@ -105,7 +105,7 @@ namespace Orchard.DisplayManagement.Implementation {
 
             foreach (var frameType in shape.Metadata.Wrappers) {
                 ShapeBinding frameBinding;
-                if (TryGetDescriptorBinding(frameType, Enumerable.Empty<string>(), shapeTable, out frameBinding)) {
+                if (TryGetDescriptorBinding(frameType, Enumerable.Empty<string>(), shapeTable, context, out frameBinding)) {
                     shape.Metadata.ChildContent = Process(frameBinding, shape, context);
                 }
             }
@@ -140,7 +140,7 @@ namespace Orchard.DisplayManagement.Implementation {
             return shape.Metadata.ChildContent;
         }
 
-        private bool TryGetDescriptorBinding(string shapeType, IEnumerable<string> shapeAlternates, ShapeTable shapeTable, out ShapeBinding shapeBinding) {
+        private bool TryGetDescriptorBinding(string shapeType, IEnumerable<string> shapeAlternates, ShapeTable shapeTable, DisplayContext displayContext, out ShapeBinding shapeBinding) {
             // shape alternates are optional, fully qualified binding names
             // the earliest added alternates have the lowest priority
             // the descriptor returned is based on the binding that is matched, so it may be an entirely
@@ -148,12 +148,12 @@ namespace Orchard.DisplayManagement.Implementation {
             foreach (var shapeAlternate in shapeAlternates.Reverse()) {
 
                 foreach (var shapeBindingResolver in _shapeBindingResolvers) {
-                    if(shapeBindingResolver.TryGetDescriptorBinding(shapeAlternate, out shapeBinding)) {
+                    if (shapeBindingResolver.TryGetDescriptorBinding(shapeAlternate, out shapeBinding)) {
                         return true;
                     }
                 }
 
-                if (shapeTable.Bindings.TryGetValue(shapeAlternate, out shapeBinding)) {
+                if (shapeTable.Bindings.TryGetValue(string.Concat(displayContext.BindingAction.ToString(), "|", shapeAlternate), out shapeBinding)) {
                     return true;
                 }
             }
@@ -169,7 +169,7 @@ namespace Orchard.DisplayManagement.Implementation {
                     }
                 }
 
-                if (shapeTable.Bindings.TryGetValue(shapeTypeScan, out shapeBinding)) {
+                if (shapeTable.Bindings.TryGetValue(string.Concat(displayContext.BindingAction.ToString(), "|", shapeTypeScan), out shapeBinding)) {
                     return true;
                 }
 
