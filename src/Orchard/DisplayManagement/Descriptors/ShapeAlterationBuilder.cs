@@ -12,7 +12,7 @@ namespace Orchard.DisplayManagement.Descriptors {
         readonly string _shapeType;
         readonly string _bindingName;
         readonly IList<Action<ShapeDescriptor>> _configurations = new List<Action<ShapeDescriptor>>();
-        BindingAction _bindingAction;
+        string _bindingType;
 
 
         public ShapeAlterationBuilder(Feature feature, string shapeType) {
@@ -33,8 +33,8 @@ namespace Orchard.DisplayManagement.Descriptors {
             return this;
         }
 
-        public ShapeAlterationBuilder Action(BindingAction bindingAction) {
-            _bindingAction = bindingAction;
+        public ShapeAlterationBuilder BindingType(string bindingType) {
+            _bindingType = bindingType;
             return this;
         }
 
@@ -65,7 +65,7 @@ namespace Orchard.DisplayManagement.Descriptors {
                 };
 
                 // ShapeDescriptor.Bindings is a case insensitive dictionary
-                descriptor.Bindings[string.Format("{0}|{1}", _bindingAction.ToString(), _bindingName)] = binding;
+                descriptor.Bindings[string.Format("{0}|{1}", _bindingType, _bindingName)] = binding;
 
             });
         }
@@ -122,7 +122,7 @@ namespace Orchard.DisplayManagement.Descriptors {
         public string ContentType { get; set; }
         public string Stereotype { get; set; }
         public string DisplayType { get; set; }
-        public BindingAction BindingAction { get; set; }
+        public string BindingType { get; set; }
         public string Differentiator { get; set; }
         public string Path { get; set; }
         public string Source { get; set; }

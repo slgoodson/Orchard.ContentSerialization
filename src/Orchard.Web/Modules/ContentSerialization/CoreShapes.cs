@@ -46,7 +46,7 @@ namespace ContentSerialization {
 
         }
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void Content(dynamic Display, dynamic Shape) {
             using (Display.ViewDataContainer.Model.Node("Content")) {
                 if (Shape.Meta != null) {
@@ -61,21 +61,21 @@ namespace ContentSerialization {
             }
         }
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void ContentZone(dynamic Display, dynamic Shape) {
             foreach (var item in (IEnumerable<dynamic>)Order(Shape)) {
                 Display(item);
             }
         }
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void DocumentZone(dynamic Display, dynamic Shape) {
             foreach (var item in (IEnumerable<dynamic>)Order(Shape)) {
                 Display(item);
             }
         }
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void Pager(dynamic Shape, dynamic Display,
             int Page,
             int PageSize,
@@ -120,7 +120,7 @@ namespace ContentSerialization {
             }
         }
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void Parts_Common_Metadata(dynamic Display, dynamic Shape) {
             string DisplayUrl = null;
             if (((IContent)Shape.ContentPart).Is<IAliasAspect>()) {
@@ -135,7 +135,7 @@ namespace ContentSerialization {
             Display.ViewDataContainer.Model.PublishedUtc = Shape.ContentPart.PublishedUtc;
         }
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void Parts_Common_Metadata_Summary(dynamic Display, dynamic Shape) {
             string DisplayUrl = null;
             if (((IContent)Shape.ContentPart).Is<IAliasAspect>()) {
@@ -150,33 +150,33 @@ namespace ContentSerialization {
             Display.ViewDataContainer.Model.PublishedUtc = Shape.ContentPart.PublishedUtc;
         }
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void Parts_Title(dynamic Display, dynamic Shape) {
             Display.ViewDataContainer.Model.Title = Shape.Title;
         }
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void Parts_Title_Summary(dynamic Display, dynamic Shape) {
             Display.ViewDataContainer.Model.Title = Shape.Title;
         }
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void Parts_Common_Body(dynamic Display, dynamic Shape) {
             Display.ViewDataContainer.Model.Body = Shape.Html.ToString();
         }
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void Parts_Common_Body_Summary(dynamic Display, dynamic Shape) {
             Display.ViewDataContainer.Model.Body = Shape.Html.ToString();
         }
 
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void Parts_Contents_Publish(dynamic Display, dynamic Shape) {
 
         }
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void List(dynamic Display, dynamic Shape) {
             using (Display.ViewDataContainer.Model.List(Shape.Name ?? "Items")) {
                 foreach (var item in ((IEnumerable<dynamic>)Shape.Items)) {
@@ -185,7 +185,7 @@ namespace ContentSerialization {
             }
         }
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void Parts_Container_Contained(dynamic Display, dynamic Shape) {
             Shape.List.Name = "ChildItems";
             Display(Shape.List);

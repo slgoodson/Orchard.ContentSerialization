@@ -43,34 +43,34 @@ namespace ContentSerialization {
 
         }
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void Fields_Common_Text(dynamic Display, dynamic Shape, TextWriter Output) {
             Display.ViewDataContainer.Model.Set(Shape.ContentField.Name, Shape.Value.ToString());
         }
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void Fields_Input(dynamic Display, dynamic Shape, TextWriter Output) {
             Display.ViewDataContainer.Model.Set(Shape.ContentField.Name, Shape.ContentField.Value);
         }
 
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void Fields_Boolean(dynamic Display, dynamic Shape, TextWriter Output) {
             bool? booleanValue = Shape.ContentField.Value;
             Display.ViewDataContainer.Model.Set(Shape.ContentField.Name, booleanValue.HasValue ? booleanValue.Value : booleanValue);
         }
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void Fields_DateTime(dynamic Display, dynamic Shape, TextWriter Output) {
             Display.ViewDataContainer.Model.Set(Shape.ContentField.Name, Shape.ContentField.DateTime);
         }
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void Fields_Numeric(dynamic Display, dynamic Shape, TextWriter Output) {
             Display.ViewDataContainer.Model.Set(Shape.ContentField.Name, Shape.ContentField.Value);
         }
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void Fields_Enumeration(dynamic Display, dynamic Shape, TextWriter Output) {
             string valueToDisplay = string.Empty;
             string[] selectedValues = Shape.ContentField.SelectedValues;
@@ -83,7 +83,7 @@ namespace ContentSerialization {
             Display.ViewDataContainer.Model.Set(Shape.ContentField.Name, translatedValues);
         }
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void Fields_MediaLibraryPicker(dynamic Display, dynamic Shape, TextWriter Output) {
             var field = Shape.ContentField;
             string name = field.DisplayName;

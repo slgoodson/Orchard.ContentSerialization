@@ -3,11 +3,11 @@
 
 namespace Orchard.DisplayManagement {
     public class ShapeAttribute : Attribute {
-        public ShapeAttribute() { }
-        public ShapeAttribute(string shapeType) { this.ShapeType = shapeType; }
-        public ShapeAttribute(BindingAction bindingAction) { this.BindingAction = bindingAction; }
+        public ShapeAttribute() { this.BindingType = "Display"; }
+    //    public ShapeAttribute(string shapeType) { this.ShapeType = shapeType; }
+        public ShapeAttribute(string bindingType) { this.BindingType = bindingType; }
 
-        public BindingAction BindingAction { get; private set; }
+        public string BindingType { get; private set; }
         public string ShapeType { get; private set; }
     }
 }

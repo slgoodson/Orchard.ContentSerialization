@@ -691,8 +691,8 @@ namespace Orchard.ContentManagement {
             return GetDisplayGroupInfos(content).FirstOrDefault(gi => string.Equals(gi.Id, groupInfoId, StringComparison.OrdinalIgnoreCase));
         }
 
-        public dynamic BuildDisplay(IContent content, string displayType = "", string groupId = "", BindingAction bindingAction = BindingAction.Display) {
-            return _contentDisplay.Value.BuildDisplay(content, displayType, groupId, bindingAction);
+        public dynamic BuildDisplay(IContent content, string displayType = "", string groupId = "", string bindingType = "Display") {
+            return _contentDisplay.Value.BuildDisplay(content, displayType, groupId, bindingType);
         }
 
         public dynamic BuildEditor(IContent content, string groupId = "") {

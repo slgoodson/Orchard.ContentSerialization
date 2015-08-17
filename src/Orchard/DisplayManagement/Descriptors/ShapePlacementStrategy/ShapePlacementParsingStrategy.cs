@@ -136,12 +136,12 @@ namespace Orchard.DisplayManagement.Descriptors.ShapePlacementStrategy {
                         return ctx => (ctx.DisplayType ?? "").StartsWith(prefix) && predicate(ctx);
                     }
                     return ctx => (ctx.DisplayType == expression) && predicate(ctx);
-                case "BindingAction":
+                case "BindingType":
                     if (expression.EndsWith("*")) {
                         var prefix = expression.Substring(0, expression.Length - 1);
-                        return ctx => (ctx.BindingAction.ToString() ?? "").StartsWith(prefix) && predicate(ctx);
+                        return ctx => (ctx.BindingType ?? "").StartsWith(prefix) && predicate(ctx);
                     }
-                    return ctx => (ctx.BindingAction.ToString() == expression) && predicate(ctx);
+                    return ctx => (ctx.BindingType == expression) && predicate(ctx);
                 case "Path":
                     var normalizedPath = VirtualPathUtility.IsAbsolute(expression)
                                              ? VirtualPathUtility.ToAppRelative(expression)

@@ -49,7 +49,7 @@ namespace ContentSerialization.Controllers {
                 return new NotFoundWithMessageResult(T("Cannot view content").ToString());
             }
 
-            var model = _contentManager.BuildDisplay(contentItem, "Detail", bindingAction: BindingAction.Translate);
+            var model = _contentManager.BuildDisplay(contentItem, "Detail", bindingType: "Translate");
             var vm = _serializer.Display(model);
 
             return Ok(vm);

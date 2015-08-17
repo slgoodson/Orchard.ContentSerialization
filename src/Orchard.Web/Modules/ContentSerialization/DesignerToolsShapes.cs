@@ -44,7 +44,7 @@ namespace ContentSerialization {
 
         }
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void ShapeTracingWrapper(dynamic Display, dynamic Shape, TextWriter Output) {
             if (Shape.IgnoreShapeTracer == null || !(bool)Shape.IgnoreShapeTracer) {
                 using (Display.ViewDataContainer.Model.Node(string.Concat(Shape.ShapeId.ToString(), "-", Shape.Metadata.Type))) {

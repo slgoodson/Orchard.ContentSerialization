@@ -48,17 +48,17 @@ namespace ContentSerialization {
 
         }
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void Fields_TaxonomyField(dynamic Display, dynamic Shape) {
             Display.ViewDataContainer.Model.Set(Shape.ContentField.DisplayName, ((IEnumerable<dynamic>)Shape.Terms).Select(t => t.Name));
         }
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void Parts_TaxonomyPart(dynamic Display, dynamic Shape) {
             Display(Shape.Taxonomy);
         }
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void Taxonomy(dynamic Display, dynamic Shape) {
             Display(Shape.Taxonomy);
 
@@ -67,7 +67,7 @@ namespace ContentSerialization {
             }
         }
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void TaxonomyItem(dynamic Display, dynamic Shape) {
             using (Display.ViewDataContainer.Model.Node(Shape.ContentPart.Name)) {
 
@@ -88,7 +88,7 @@ namespace ContentSerialization {
             }
         }
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void Parts_TermPart(dynamic Display, dynamic Shape) {
             Display(Shape.ContentItems);
             Display(Shape.Pager);

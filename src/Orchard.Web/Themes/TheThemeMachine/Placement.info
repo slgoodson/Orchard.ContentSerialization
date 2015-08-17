@@ -14,4 +14,10 @@
     <Place Parts_Common_Metadata="-"/>
   </Match>
 -->
+  <Match BindingType="Translate">
+    <Match ContentType="Article">
+      
+        <Place Parts_Title="-" />
+    </Match>
+  </Match>
 </Placement>
