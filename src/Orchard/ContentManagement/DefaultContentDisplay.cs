@@ -38,7 +38,7 @@ namespace Orchard.ContentManagement {
 
         public ILogger Logger { get; set; }
 
-        public dynamic BuildDisplay(IContent content, string displayType, string groupId) {
+        public dynamic BuildDisplay(IContent content, string displayType, string groupId, BindingAction bindingAction) {
             var contentTypeDefinition = content.ContentItem.TypeDefinition;
             string stereotype;
             if (!contentTypeDefinition.Settings.TryGetValue("Stereotype", out stereotype))
@@ -55,7 +55,7 @@ namespace Orchard.ContentManagement {
             var workContext = _workContextAccessor.GetContext(_requestContext.HttpContext);
             context.Layout = workContext.Layout;
 
-            BindPlacement(context, actualDisplayType, stereotype);
+            BindPlacement(context, actualDisplayType, stereotype, bindingAction);
 
             _handlers.Value.Invoke(handler => handler.BuildDisplay(context), Logger);
             return context.Shape;
@@ -76,7 +76,7 @@ namespace Orchard.ContentManagement {
             ((IShape)itemShape).Metadata.Alternates.Add(actualShapeType + "__" + content.ContentItem.ContentType);
 
             var context = new BuildEditorContext(itemShape, content, groupId, _shapeFactory);
-            BindPlacement(context, null, stereotype);
+            BindPlacement(context, null, stereotype, BindingAction.Display);
 
             _handlers.Value.Invoke(handler => handler.BuildEditor(context), Logger);
 
@@ -104,7 +104,7 @@ namespace Orchard.ContentManagement {
             ((IShape)itemShape).Metadata.Alternates.Add(actualShapeType + "__" + content.ContentItem.ContentType);
 
             var context = new UpdateEditorContext(itemShape, content, updater, groupInfoId, _shapeFactory, shapeTable, GetPath());
-            BindPlacement(context, null, stereotype);
+            BindPlacement(context, null, stereotype, BindingAction.Display);
 
             _handlers.Value.Invoke(handler => handler.UpdateEditor(context), Logger);
 
@@ -115,7 +115,7 @@ namespace Orchard.ContentManagement {
             return _shapeFactory.Create(actualShapeType, Arguments.Empty(), () => new ZoneHolding(() => _shapeFactory.Create("ContentZone", Arguments.Empty())));
         }
 
-        private void BindPlacement(BuildShapeContext context, string displayType, string stereotype) {
+        private void BindPlacement(BuildShapeContext context, string displayType, string stereotype, BindingAction bindingAction) {
             context.FindPlacement = (partShapeType, differentiator, defaultLocation) => {
 
                 var workContext = _workContextAccessor.GetContext(_requestContext.HttpContext);
@@ -130,6 +130,7 @@ namespace Orchard.ContentManagement {
                         ContentType = context.ContentItem.ContentType,
                         Stereotype = stereotype,
                         DisplayType = displayType,
+                        BindingAction = bindingAction,
                         Differentiator = differentiator,
                         Path = GetPath()
                     };

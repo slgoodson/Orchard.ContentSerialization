@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using ContentSerialization.DisplayManagement;
+using Orchard.DisplayManagement.Descriptors;
 
 namespace ContentSerialization.Controllers {
     public class ItemController : ApiController {
@@ -48,7 +49,7 @@ namespace ContentSerialization.Controllers {
                 return new NotFoundWithMessageResult(T("Cannot view content").ToString());
             }
 
-            var model = _contentManager.BuildDisplay(contentItem, "Detail");
+            var model = _contentManager.BuildDisplay(contentItem, "Detail", bindingAction: BindingAction.Translate);
             var vm = _serializer.Display(model);
 
             return Ok(vm);
