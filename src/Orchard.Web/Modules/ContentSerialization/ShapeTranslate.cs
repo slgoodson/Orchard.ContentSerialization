@@ -42,7 +42,7 @@ namespace ContentSerialization.DisplayManagement {
 
             viewContext.RouteData.DataTokens["IWorkContextAccessor"] = _workContextAccessor;
             var display = _displayHelperFactory.CreateHelper(viewContext, new ViewDataContainer());
-            display.BindingAction = BindingAction.Translate;
+            display.BindingType = "Translate";
 
             ((DisplayHelper)display).ShapeExecute(shape);
 

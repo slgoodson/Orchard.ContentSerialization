@@ -48,7 +48,7 @@ namespace ContentSerialization {
 
         }
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void Parts_Tags_ShowTags(dynamic Display, dynamic Shape) {
 
             var tagsHtml = new List<IHtmlString>();

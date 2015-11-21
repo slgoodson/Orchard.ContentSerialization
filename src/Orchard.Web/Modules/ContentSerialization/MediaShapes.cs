@@ -43,7 +43,7 @@ namespace ContentSerialization {
 
         }
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void Media(dynamic Display, dynamic Shape, TextWriter Output) {
             using (Display.ViewDataContainer.Model.Node("Media")) {
                 if (Shape.Meta != null) {
@@ -59,7 +59,7 @@ namespace ContentSerialization {
         }
 
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void Parts_Image(dynamic Display, dynamic Shape, TextWriter Output) {
             var mediaPart = Shape.ContentPart.ContentItem.MediaPart;
 
@@ -69,7 +69,7 @@ namespace ContentSerialization {
             Display.ViewDataContainer.Model.Height = Shape.ContentPart.Height;
         }
 
-        [Shape(BindingAction.Translate)]
+        [Shape("Translate")]
         public void Parts_Image_Summary(dynamic Display, dynamic Shape, TextWriter Output) {
             var mediaPart = Shape.ContentPart.ContentItem.MediaPart;
 
