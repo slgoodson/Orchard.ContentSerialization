@@ -135,9 +135,10 @@ namespace Orchard.DynamicForms.Drivers {
 
         private IEnumerable<SelectListItem> GetTermOptions(Taxonomy element, string displayType, int? taxonomyId, IDictionary<string, object> tokenData) {
             var optionLabel = element.OptionLabel;
+            var runtimeValues = GetRuntimeValues(element);
 
             if (!String.IsNullOrWhiteSpace(optionLabel)) {
-                yield return new SelectListItem { Text = displayType != "Design" ? _tokenizer.Replace(optionLabel, tokenData) : optionLabel };
+                yield return new SelectListItem { Text = displayType != "Design" ? _tokenizer.Replace(optionLabel, tokenData) : optionLabel, Value = string.Empty };
             }
 
             if (taxonomyId == null)
@@ -154,7 +155,8 @@ namespace Orchard.DynamicForms.Drivers {
 
                 return new SelectListItem {
                     Text = text,
-                    Value = value
+                    Value = value,
+                    Selected = runtimeValues.Contains(value, StringComparer.OrdinalIgnoreCase)
                 };
             });
 
@@ -170,6 +172,11 @@ namespace Orchard.DynamicForms.Drivers {
             foreach (var item in projection) {
                 yield return item;
             }
+        }
+
+        private IEnumerable<string> GetRuntimeValues(Taxonomy element) {
+            var runtimeValue = element.RuntimeValue;
+            return runtimeValue != null ? runtimeValue.Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries) : Enumerable.Empty<string>();
         }
     }
 }

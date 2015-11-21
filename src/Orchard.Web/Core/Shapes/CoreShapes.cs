@@ -301,9 +301,12 @@ namespace Orchard.Core.Shapes {
             var progress = 1;
             var flatPositionComparer = new FlatPositionComparer();
             var ordering = unordered.Select(item => {
-                var position = (item == null || item.GetType().GetProperty("Metadata") == null || item.Metadata.GetType().GetProperty("Position") == null)
-                                   ? null
-                                   : item.Metadata.Position;
+                string position = null;
+                var itemPosition = item as IPositioned;
+                if (itemPosition != null) {
+                    position = itemPosition.Position;
+                }
+
                 return new { item, position };
             }).ToList();
 
@@ -456,10 +459,10 @@ namespace Orchard.Core.Shapes {
     
             var totalPageCount = pageSize > 0 ? (int)Math.Ceiling(TotalItemCount / pageSize) : 1;
 
-            var firstText = FirstText ?? T("<<");
-            var previousText = PreviousText ?? T("<");
-            var nextText = NextText ?? T(">");
-            var lastText = LastText ?? T(">>");
+            var firstText = FirstText ?? T("&lt;&lt;");
+            var previousText = PreviousText ?? T("&lt;");
+            var nextText = NextText ?? T("&gt;");
+            var lastText = LastText ?? T("&gt;&gt;");
             var gapText = GapText ?? T("...");
 
             var routeData = new RouteValueDictionary(Html.ViewContext.RouteData.Values);
