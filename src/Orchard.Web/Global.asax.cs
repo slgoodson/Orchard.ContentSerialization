@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Autofac;
@@ -58,6 +59,16 @@ namespace Orchard.Web {
             builder.Register(ctx => RouteTable.Routes).SingleInstance();
             builder.Register(ctx => ModelBinders.Binders).SingleInstance();
             builder.Register(ctx => ViewEngines.Engines).SingleInstance();
+        }
+
+        protected void Application_PreSendRequestHeaders(object sender, EventArgs e)
+        {
+            if (HttpContext.Current != null) {
+                HttpContext.Current.Response.Headers.Remove("X-Frame-Options");
+                HttpContext.Current.Response.Headers.Remove("Access-Control-Allow-Origin");
+                HttpContext.Current.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+            }
+            
         }
     }
 }
